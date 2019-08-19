@@ -1,0 +1,792 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot rpa="false" generated="20190808 12:49:59.375" generator="Robot 3.1.2 (Python 2.7.14 on win32)">
+<suite source="C:\Users\etwxxbe\Documents\Motorola\Motorola_NKD\Motorola_NKD\Example.robot" id="s1" name="Example">
+<test id="s1-t1" name="NK_MAKE_ADJUSTMENT_CREATE">
+<kw name="Create Session" library="RequestsLibrary">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>Make_Adjustment_Create_Session</arg>
+<arg>${BASE_URL}</arg>
+</arguments>
+<msg timestamp="20190808 12:50:00.814" level="INFO">Creating Session using : alias=Make_Adjustment_Create_Session, url=http://10.184.42.244:3453, headers={},                     cookies=None, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" endtime="20190808 12:50:00.815" starttime="20190808 12:50:00.813"></status>
+</kw>
+<kw name="Create Dictionary" library="BuiltIn">
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<arguments>
+<arg>content-type=text/xml</arg>
+</arguments>
+<assign>
+<var>${header}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.817" level="INFO">${header} = {u'content-type': u'text/xml'}</msg>
+<status status="PASS" endtime="20190808 12:50:00.817" starttime="20190808 12:50:00.816"></status>
+</kw>
+<kw name="Get Current Date" library="DateTime">
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<arguments>
+<arg>result_format=%Y-%m-%d</arg>
+</arguments>
+<assign>
+<var>${date}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.819" level="INFO">${date} = 2019-08-08</msg>
+<status status="PASS" endtime="20190808 12:50:00.819" starttime="20190808 12:50:00.818"></status>
+</kw>
+<kw name="Get File" library="OperatingSystem">
+<doc>Returns the contents of a specified file.</doc>
+<arguments>
+<arg>${REQ_FILE_PATH}</arg>
+<arg>encoding_errors=False</arg>
+</arguments>
+<assign>
+<var>${Request}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.823" html="yes" level="INFO">Getting file '&lt;a href="file://C:\Users\etwxxbe\Documents\Motorola\Motorola_NKD\Motorola_NKD\Make_adjustment"&gt;C:\Users\etwxxbe\Documents\Motorola\Motorola_NKD\Motorola_NKD\Make_adjustment&lt;/a&gt;'.</msg>
+<msg timestamp="20190808 12:50:00.825" level="INFO">${Request} = &lt;soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" x...</msg>
+<status status="PASS" endtime="20190808 12:50:00.825" starttime="20190808 12:50:00.820"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${Request}</arg>
+<arg>CurrentDate</arg>
+<arg>${date}</arg>
+</arguments>
+<assign>
+<var>${Request}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.827" level="INFO">${Request} = &lt;soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" x...</msg>
+<status status="PASS" endtime="20190808 12:50:00.827" starttime="20190808 12:50:00.826"></status>
+</kw>
+<kw name="Exteranet Excel Read" library="ExcelRead">
+<doc>This Function will Read Excel from mentioned path.
+Args:
+Path of Excel file(String)
+Returns:
+This function will return List object</doc>
+<arguments>
+<arg>${EXCEL_PATH}</arg>
+</arguments>
+<assign>
+<var>@{ExcelValues}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.862" level="INFO">&lt;class 'openpyxl.workbook.workbook.Workbook'&gt;
+3
+11
+For loop started
+Dictionary is created
+Dictionary is created
+2</msg>
+<msg timestamp="20190808 12:50:00.863" level="INFO">@{ExcelValues} = [ {u'adjType': u'credit', u'adjAmount_currency': u'GBP', u'ssiUserId': u'ADMX', u'value': u'2', u'adjAmount': 10L, u'reasonId': u'WF001', u'key': u'BU_ID', u'adjReceiverId': u'ESN00000000121', u'ssiTr...</msg>
+<status status="PASS" endtime="20190808 12:50:00.863" starttime="20190808 12:50:00.828"></status>
+</kw>
+<kw type="for" name="${i} IN [ @{ExcelValues} ]">
+<kw type="foritem" name="${i} = {u'adjType': u'credit', u'adjAmount_currency': u'GBP', u'ssiUserId': u'ADMX', u'value': u'2', u'adjAmount': 10L, u'reasonId': u'WF001', u'key': u'BU_ID', u'adjReceiverId': u'ESN00000000121', u'ssiTran...">
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${i}</arg>
+</arguments>
+<assign>
+<var>&amp;{Dict}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.866" level="INFO">&amp;{Dict} = { adjType=credit | adjAmount_currency=GBP | ssiUserId=ADMX | value=2 | adjAmount=10 | reasonId=WF001 | key=BU_ID | adjReceiverId=ESN00000000121 | ssiTransactionId=123456789 | vat=E | adjReceiverType=A...</msg>
+<status status="PASS" endtime="20190808 12:50:00.866" starttime="20190808 12:50:00.865"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Dict}</arg>
+<arg>reasonId</arg>
+</arguments>
+<assign>
+<var>${reasonId}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.868" level="INFO">${reasonId} = WF001</msg>
+<status status="PASS" endtime="20190808 12:50:00.868" starttime="20190808 12:50:00.867"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Dict}</arg>
+<arg>adjType</arg>
+</arguments>
+<assign>
+<var>${adjType}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.869" level="INFO">${adjType} = credit</msg>
+<status status="PASS" endtime="20190808 12:50:00.869" starttime="20190808 12:50:00.869"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Dict}</arg>
+<arg>adjAmount</arg>
+</arguments>
+<assign>
+<var>${adjAmount}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.871" level="INFO">${adjAmount} = 10</msg>
+<status status="PASS" endtime="20190808 12:50:00.872" starttime="20190808 12:50:00.870"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Dict}</arg>
+<arg>adjAmount_currency</arg>
+</arguments>
+<assign>
+<var>${adjAmount_currency}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.874" level="INFO">${adjAmount_currency} = GBP</msg>
+<status status="PASS" endtime="20190808 12:50:00.874" starttime="20190808 12:50:00.873"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Dict}</arg>
+<arg>vat</arg>
+</arguments>
+<assign>
+<var>${vat}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.875" level="INFO">${vat} = E</msg>
+<status status="PASS" endtime="20190808 12:50:00.875" starttime="20190808 12:50:00.874"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Dict}</arg>
+<arg>adjReceiverType</arg>
+</arguments>
+<assign>
+<var>${adjReceiverType}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.877" level="INFO">${adjReceiverType} = ACCOUNT</msg>
+<status status="PASS" endtime="20190808 12:50:00.877" starttime="20190808 12:50:00.876"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Dict}</arg>
+<arg>adjReceiverId</arg>
+</arguments>
+<assign>
+<var>${adjReceiverId}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.878" level="INFO">${adjReceiverId} = ESN00000000121</msg>
+<status status="PASS" endtime="20190808 12:50:00.879" starttime="20190808 12:50:00.878"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Dict}</arg>
+<arg>ssiUserId</arg>
+</arguments>
+<assign>
+<var>${ssiUserId}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.881" level="INFO">${ssiUserId} = ADMX</msg>
+<status status="PASS" endtime="20190808 12:50:00.882" starttime="20190808 12:50:00.879"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Dict}</arg>
+<arg>ssiTransactionId</arg>
+</arguments>
+<assign>
+<var>${ssiTransactionId}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.883" level="INFO">${ssiTransactionId} = 123456789</msg>
+<status status="PASS" endtime="20190808 12:50:00.883" starttime="20190808 12:50:00.882"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Dict}</arg>
+<arg>key</arg>
+</arguments>
+<assign>
+<var>${key}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.884" level="INFO">${key} = BU_ID</msg>
+<status status="PASS" endtime="20190808 12:50:00.884" starttime="20190808 12:50:00.884"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Dict}</arg>
+<arg>value</arg>
+</arguments>
+<assign>
+<var>${value}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.886" level="INFO">${value} = 2</msg>
+<status status="PASS" endtime="20190808 12:50:00.886" starttime="20190808 12:50:00.885"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${reasonId}</arg>
+</arguments>
+<msg timestamp="20190808 12:50:00.887" level="INFO">WF001</msg>
+<status status="PASS" endtime="20190808 12:50:00.887" starttime="20190808 12:50:00.886"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${adjType}</arg>
+</arguments>
+<msg timestamp="20190808 12:50:00.889" level="INFO">credit</msg>
+<status status="PASS" endtime="20190808 12:50:00.889" starttime="20190808 12:50:00.888"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${adjAmount}</arg>
+</arguments>
+<msg timestamp="20190808 12:50:00.890" level="INFO">10</msg>
+<status status="PASS" endtime="20190808 12:50:00.891" starttime="20190808 12:50:00.890"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${adjAmount_currency}</arg>
+</arguments>
+<msg timestamp="20190808 12:50:00.892" level="INFO">GBP</msg>
+<status status="PASS" endtime="20190808 12:50:00.892" starttime="20190808 12:50:00.891"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${vat}</arg>
+</arguments>
+<msg timestamp="20190808 12:50:00.893" level="INFO">E</msg>
+<status status="PASS" endtime="20190808 12:50:00.893" starttime="20190808 12:50:00.892"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${adjReceiverType}</arg>
+</arguments>
+<msg timestamp="20190808 12:50:00.894" level="INFO">ACCOUNT</msg>
+<status status="PASS" endtime="20190808 12:50:00.895" starttime="20190808 12:50:00.894"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${Request}</arg>
+<arg>ADJUST_TYPE</arg>
+<arg>${adjType}</arg>
+</arguments>
+<assign>
+<var>${Request}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.897" level="INFO">${Request} = &lt;soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" x...</msg>
+<status status="PASS" endtime="20190808 12:50:00.897" starttime="20190808 12:50:00.895"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${Request}</arg>
+<arg>AMOUNT_VAT</arg>
+<arg>${vat}</arg>
+</arguments>
+<assign>
+<var>${Request}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.898" level="INFO">${Request} = &lt;soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" x...</msg>
+<status status="PASS" endtime="20190808 12:50:00.899" starttime="20190808 12:50:00.898"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${Request}</arg>
+<arg>ADJUST_CURRENCY</arg>
+<arg>${adjAmount_currency}</arg>
+</arguments>
+<assign>
+<var>${Request}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.900" level="INFO">${Request} = &lt;soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" x...</msg>
+<status status="PASS" endtime="20190808 12:50:00.900" starttime="20190808 12:50:00.899"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${Request}</arg>
+<arg>ADJUST_TYPE</arg>
+<arg>${adjType}</arg>
+</arguments>
+<assign>
+<var>${Request}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.901" level="INFO">${Request} = &lt;soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" x...</msg>
+<status status="PASS" endtime="20190808 12:50:00.901" starttime="20190808 12:50:00.900"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${Request}</arg>
+<arg>RS_ID</arg>
+<arg>${reasonId}</arg>
+</arguments>
+<assign>
+<var>${Request}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.902" level="INFO">${Request} = &lt;soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" x...</msg>
+<status status="PASS" endtime="20190808 12:50:00.903" starttime="20190808 12:50:00.902"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${Request}</arg>
+<arg>USER_ID</arg>
+<arg>${ssiUserId}</arg>
+</arguments>
+<assign>
+<var>${Request}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.904" level="INFO">${Request} = &lt;soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" x...</msg>
+<status status="PASS" endtime="20190808 12:50:00.904" starttime="20190808 12:50:00.903"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${Request}</arg>
+<arg>TRAN_ID</arg>
+<arg>${ssiTransactionId}</arg>
+</arguments>
+<assign>
+<var>${Request}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.906" level="INFO">${Request} = &lt;soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" x...</msg>
+<status status="PASS" endtime="20190808 12:50:00.907" starttime="20190808 12:50:00.905"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${Request}</arg>
+<arg>KEY_ID</arg>
+<arg>${key}</arg>
+</arguments>
+<assign>
+<var>${Request}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.908" level="INFO">${Request} = &lt;soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" x...</msg>
+<status status="PASS" endtime="20190808 12:50:00.908" starttime="20190808 12:50:00.907"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${Request}</arg>
+<arg>VALUE_NO</arg>
+<arg>${value}</arg>
+</arguments>
+<assign>
+<var>${Request}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.909" level="INFO">${Request} = &lt;soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" x...</msg>
+<status status="PASS" endtime="20190808 12:50:00.909" starttime="20190808 12:50:00.909"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${Request}</arg>
+<arg>RECEIVER_TYPE</arg>
+<arg>${adjReceiverType}</arg>
+</arguments>
+<assign>
+<var>${Request}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.911" level="INFO">${Request} = &lt;soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" x...</msg>
+<status status="PASS" endtime="20190808 12:50:00.911" starttime="20190808 12:50:00.910"></status>
+</kw>
+<status status="PASS" endtime="20190808 12:50:00.911" starttime="20190808 12:50:00.864"></status>
+</kw>
+<kw type="foritem" name="${i} = {u'adjType': u'debit', u'adjAmount_currency': u'ABC', u'ssiUserId': u'QWER', u'value': u'1', u'adjAmount': 100L, u'reasonId': u'WF002', u'key': u'BU_ID', u'adjReceiverId': u'ESN00000000122', u'ssiTran...">
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${i}</arg>
+</arguments>
+<assign>
+<var>&amp;{Dict}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.914" level="INFO">&amp;{Dict} = { adjType=debit | adjAmount_currency=ABC | ssiUserId=QWER | value=1 | adjAmount=100 | reasonId=WF002 | key=BU_ID | adjReceiverId=ESN00000000122 | ssiTransactionId=987654332 | vat=A | adjReceiverType=A...</msg>
+<status status="PASS" endtime="20190808 12:50:00.914" starttime="20190808 12:50:00.913"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Dict}</arg>
+<arg>reasonId</arg>
+</arguments>
+<assign>
+<var>${reasonId}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.916" level="INFO">${reasonId} = WF002</msg>
+<status status="PASS" endtime="20190808 12:50:00.916" starttime="20190808 12:50:00.915"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Dict}</arg>
+<arg>adjType</arg>
+</arguments>
+<assign>
+<var>${adjType}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.917" level="INFO">${adjType} = debit</msg>
+<status status="PASS" endtime="20190808 12:50:00.917" starttime="20190808 12:50:00.916"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Dict}</arg>
+<arg>adjAmount</arg>
+</arguments>
+<assign>
+<var>${adjAmount}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.919" level="INFO">${adjAmount} = 100</msg>
+<status status="PASS" endtime="20190808 12:50:00.919" starttime="20190808 12:50:00.918"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Dict}</arg>
+<arg>adjAmount_currency</arg>
+</arguments>
+<assign>
+<var>${adjAmount_currency}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.920" level="INFO">${adjAmount_currency} = ABC</msg>
+<status status="PASS" endtime="20190808 12:50:00.921" starttime="20190808 12:50:00.920"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Dict}</arg>
+<arg>vat</arg>
+</arguments>
+<assign>
+<var>${vat}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.922" level="INFO">${vat} = A</msg>
+<status status="PASS" endtime="20190808 12:50:00.922" starttime="20190808 12:50:00.921"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Dict}</arg>
+<arg>adjReceiverType</arg>
+</arguments>
+<assign>
+<var>${adjReceiverType}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.923" level="INFO">${adjReceiverType} = ACCOUNT</msg>
+<status status="PASS" endtime="20190808 12:50:00.924" starttime="20190808 12:50:00.923"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Dict}</arg>
+<arg>adjReceiverId</arg>
+</arguments>
+<assign>
+<var>${adjReceiverId}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.926" level="INFO">${adjReceiverId} = ESN00000000122</msg>
+<status status="PASS" endtime="20190808 12:50:00.926" starttime="20190808 12:50:00.925"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Dict}</arg>
+<arg>ssiUserId</arg>
+</arguments>
+<assign>
+<var>${ssiUserId}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.927" level="INFO">${ssiUserId} = QWER</msg>
+<status status="PASS" endtime="20190808 12:50:00.928" starttime="20190808 12:50:00.927"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Dict}</arg>
+<arg>ssiTransactionId</arg>
+</arguments>
+<assign>
+<var>${ssiTransactionId}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.929" level="INFO">${ssiTransactionId} = 987654332</msg>
+<status status="PASS" endtime="20190808 12:50:00.930" starttime="20190808 12:50:00.928"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Dict}</arg>
+<arg>key</arg>
+</arguments>
+<assign>
+<var>${key}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.932" level="INFO">${key} = BU_ID</msg>
+<status status="PASS" endtime="20190808 12:50:00.932" starttime="20190808 12:50:00.931"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${Dict}</arg>
+<arg>value</arg>
+</arguments>
+<assign>
+<var>${value}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.933" level="INFO">${value} = 1</msg>
+<status status="PASS" endtime="20190808 12:50:00.933" starttime="20190808 12:50:00.932"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${reasonId}</arg>
+</arguments>
+<msg timestamp="20190808 12:50:00.935" level="INFO">WF002</msg>
+<status status="PASS" endtime="20190808 12:50:00.935" starttime="20190808 12:50:00.934"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${adjType}</arg>
+</arguments>
+<msg timestamp="20190808 12:50:00.936" level="INFO">debit</msg>
+<status status="PASS" endtime="20190808 12:50:00.937" starttime="20190808 12:50:00.936"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${adjAmount}</arg>
+</arguments>
+<msg timestamp="20190808 12:50:00.938" level="INFO">100</msg>
+<status status="PASS" endtime="20190808 12:50:00.939" starttime="20190808 12:50:00.937"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${adjAmount_currency}</arg>
+</arguments>
+<msg timestamp="20190808 12:50:00.940" level="INFO">ABC</msg>
+<status status="PASS" endtime="20190808 12:50:00.941" starttime="20190808 12:50:00.940"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${vat}</arg>
+</arguments>
+<msg timestamp="20190808 12:50:00.942" level="INFO">A</msg>
+<status status="PASS" endtime="20190808 12:50:00.942" starttime="20190808 12:50:00.941"></status>
+</kw>
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>${adjReceiverType}</arg>
+</arguments>
+<msg timestamp="20190808 12:50:00.943" level="INFO">ACCOUNT</msg>
+<status status="PASS" endtime="20190808 12:50:00.944" starttime="20190808 12:50:00.943"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${Request}</arg>
+<arg>ADJUST_TYPE</arg>
+<arg>${adjType}</arg>
+</arguments>
+<assign>
+<var>${Request}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.945" level="INFO">${Request} = &lt;soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" x...</msg>
+<status status="PASS" endtime="20190808 12:50:00.946" starttime="20190808 12:50:00.944"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${Request}</arg>
+<arg>AMOUNT_VAT</arg>
+<arg>${vat}</arg>
+</arguments>
+<assign>
+<var>${Request}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.947" level="INFO">${Request} = &lt;soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" x...</msg>
+<status status="PASS" endtime="20190808 12:50:00.948" starttime="20190808 12:50:00.946"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${Request}</arg>
+<arg>ADJUST_CURRENCY</arg>
+<arg>${adjAmount_currency}</arg>
+</arguments>
+<assign>
+<var>${Request}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.950" level="INFO">${Request} = &lt;soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" x...</msg>
+<status status="PASS" endtime="20190808 12:50:00.950" starttime="20190808 12:50:00.949"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${Request}</arg>
+<arg>ADJUST_TYPE</arg>
+<arg>${adjType}</arg>
+</arguments>
+<assign>
+<var>${Request}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.951" level="INFO">${Request} = &lt;soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" x...</msg>
+<status status="PASS" endtime="20190808 12:50:00.951" starttime="20190808 12:50:00.950"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${Request}</arg>
+<arg>RS_ID</arg>
+<arg>${reasonId}</arg>
+</arguments>
+<assign>
+<var>${Request}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.953" level="INFO">${Request} = &lt;soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" x...</msg>
+<status status="PASS" endtime="20190808 12:50:00.953" starttime="20190808 12:50:00.952"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${Request}</arg>
+<arg>USER_ID</arg>
+<arg>${ssiUserId}</arg>
+</arguments>
+<assign>
+<var>${Request}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.955" level="INFO">${Request} = &lt;soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" x...</msg>
+<status status="PASS" endtime="20190808 12:50:00.955" starttime="20190808 12:50:00.954"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${Request}</arg>
+<arg>TRAN_ID</arg>
+<arg>${ssiTransactionId}</arg>
+</arguments>
+<assign>
+<var>${Request}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.957" level="INFO">${Request} = &lt;soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" x...</msg>
+<status status="PASS" endtime="20190808 12:50:00.957" starttime="20190808 12:50:00.956"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${Request}</arg>
+<arg>KEY_ID</arg>
+<arg>${key}</arg>
+</arguments>
+<assign>
+<var>${Request}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.958" level="INFO">${Request} = &lt;soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" x...</msg>
+<status status="PASS" endtime="20190808 12:50:00.959" starttime="20190808 12:50:00.958"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${Request}</arg>
+<arg>VALUE_NO</arg>
+<arg>${value}</arg>
+</arguments>
+<assign>
+<var>${Request}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.962" level="INFO">${Request} = &lt;soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" x...</msg>
+<status status="PASS" endtime="20190808 12:50:00.963" starttime="20190808 12:50:00.961"></status>
+</kw>
+<kw name="Replace String" library="String">
+<doc>Replaces ``search_for`` in the given ``string`` with ``replace_with``.</doc>
+<arguments>
+<arg>${Request}</arg>
+<arg>RECEIVER_TYPE</arg>
+<arg>${adjReceiverType}</arg>
+</arguments>
+<assign>
+<var>${Request}</var>
+</assign>
+<msg timestamp="20190808 12:50:00.965" level="INFO">${Request} = &lt;soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" x...</msg>
+<status status="PASS" endtime="20190808 12:50:00.965" starttime="20190808 12:50:00.964"></status>
+</kw>
+<status status="PASS" endtime="20190808 12:50:00.966" starttime="20190808 12:50:00.912"></status>
+</kw>
+<status status="PASS" endtime="20190808 12:50:00.966" starttime="20190808 12:50:00.864"></status>
+</kw>
+<kw name="Post Request" library="RequestsLibrary">
+<doc>Send a POST request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>Make_Adjustment_Create_Session</arg>
+<arg>${Relative_URL}</arg>
+<arg>data=${Request}</arg>
+<arg>headers=${header}</arg>
+</arguments>
+<assign>
+<var>${Response}</var>
+</assign>
+<msg timestamp="20190808 12:50:01.149" level="INFO">Post Request using : alias=Make_Adjustment_Create_Session, uri=/wsi/services/ws_CIL_7_NkMakeAdjustmentCreateService.wsdl, data=&lt;empty&gt;, headers={u'content-type': u'text/xml'}, files=None, allow_redirects=True </msg>
+<msg timestamp="20190808 12:50:01.150" level="INFO">${Response} = &lt;Response [500]&gt;</msg>
+<status status="PASS" endtime="20190808 12:50:01.151" starttime="20190808 12:50:00.967"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>${Response.text}</arg>
+</arguments>
+<status status="PASS" endtime="20190808 12:50:01.153" starttime="20190808 12:50:01.151"></status>
+</kw>
+<kw name="Should Not Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are equal.</doc>
+<arguments>
+<arg>${Response.text}</arg>
+<arg>200</arg>
+</arguments>
+<status status="PASS" endtime="20190808 12:50:01.155" starttime="20190808 12:50:01.154"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${Response.text}</arg>
+<arg>500</arg>
+</arguments>
+<msg timestamp="20190808 12:50:01.157" level="FAIL">&lt;SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"&gt;&lt;SOAP-ENV:Header/&gt;&lt;SOAP-ENV:Body&gt;&lt;SOAP-ENV:Fault&gt;&lt;faultcode xmlns:ns0="http://ericsson.com/services/fault"&gt;ns0:WS.InvalidAmountValue&lt;/faultcode&gt;&lt;faultstring xml:lang="en"&gt;Invalid amount value. Only DOT is allowed as a valid decimal separator.&lt;/faultstring&gt;&lt;/SOAP-ENV:Fault&gt;&lt;/SOAP-ENV:Body&gt;&lt;/SOAP-ENV:Envelope&gt; != 500</msg>
+<status status="FAIL" endtime="20190808 12:50:01.157" starttime="20190808 12:50:01.155"></status>
+</kw>
+<status status="FAIL" endtime="20190808 12:50:01.159" critical="yes" starttime="20190808 12:50:00.812">&lt;SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"&gt;&lt;SOAP-ENV:Header/&gt;&lt;SOAP-ENV:Body&gt;&lt;SOAP-ENV:Fault&gt;&lt;faultcode xmlns:ns0="http://ericsson.com/services/fault"&gt;ns0:WS.InvalidAmountValue&lt;/faultcode&gt;&lt;faultstring xml:lang="en"&gt;Invalid amount value. Only DOT is allowed as a valid decimal separator.&lt;/faultstring&gt;&lt;/SOAP-ENV:Fault&gt;&lt;/SOAP-ENV:Body&gt;&lt;/SOAP-ENV:Envelope&gt; != 500</status>
+</test>
+<status status="FAIL" endtime="20190808 12:50:01.160" starttime="20190808 12:49:59.420"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="1" pass="0">Critical Tests</stat>
+<stat fail="1" pass="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat fail="1" id="s1" name="Example" pass="0">Example</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

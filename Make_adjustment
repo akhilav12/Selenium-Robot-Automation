@@ -1,0 +1,49 @@
+<soapenv:Envelope xmlns:mon="http://lhsgroup.com/lhsws/money" xmlns:nkm="http://ericsson.com/services/ws_CIL_7/nkmakeadjustmentcreate" xmlns:ses="http://ericsson.com/services/ws_CIL_7/sessionchange" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+   <soapenv:Header>
+      <wsse:Security soapenv:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+         <wsse:UsernameToken wsu:Id="UsernameToken-61C6F894C0B8B5A54C15625765841731">
+            <wsse:Username>ADMX</wsse:Username>
+            <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">ADMX</wsse:Password>
+            <wsse:Nonce EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary">BKSVoy5Va2CLaDu1Nep++w==</wsse:Nonce>
+            <wsu:Created>2019-07-08T09:03:04.126Z</wsu:Created>
+         </wsse:UsernameToken>
+      </wsse:Security>
+   </soapenv:Header>
+   <soapenv:Body>
+      <nkm:nkMakeAdjustmentCreateRequest>
+         <!--You may enter the following 2 items in any order-->
+         <!--Optional:-->
+         <nkm:inputAttributes>
+            <!--You may enter the following 11 items in any order-->
+            <nkm:adjustmentReferenceId>ADJREF123</nkm:adjustmentReferenceId>
+            <nkm:date>CurrentDateT09:33:39.756Z</nkm:date>
+            <nkm:reasonId>RS_ID</nkm:reasonId>
+            <nkm:adjType>ADJUST_TYPE</nkm:adjType>
+            <nkm:adjAmount>
+               <mon:amount>ADJUST_AMOUNT</mon:amount>
+               <mon:currency>ADJUST_CURRENCY</mon:currency>
+            </nkm:adjAmount>
+            <nkm:vat>AMOUNT_VAT</nkm:vat>
+            <nkm:adjReceiverType>RECEIVER_TYPE</nkm:adjReceiverType>
+            <!--Optional:-->
+            <nkm:adjReceiverId>RECEIVER_ID</nkm:adjReceiverId>
+            <!--Optional:-->
+            <nkm:approvalNote>Approved by Roger Smith</nkm:approvalNote>
+            <nkm:ssiUserId>USER_ID</nkm:ssiUserId>
+            <nkm:ssiTransactionId>TRAN_ID</nkm:ssiTransactionId>
+         </nkm:inputAttributes>
+         <!--Optional:-->
+         <nkm:sessionChangeRequest>
+            <!--Optional:-->
+            <ses:values>
+               <!--1 or more repetitions:-->
+               <ses:item>
+                  <!--You may enter the following 2 items in any order-->
+                  <ses:key>KEY_ID</ses:key>
+                  <ses:value>VALUE_NO</ses:value>
+               </ses:item>
+            </ses:values>
+         </nkm:sessionChangeRequest>
+      </nkm:nkMakeAdjustmentCreateRequest>
+   </soapenv:Body>
+</soapenv:Envelope>
